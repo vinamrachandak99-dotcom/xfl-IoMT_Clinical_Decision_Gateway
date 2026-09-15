@@ -6,7 +6,7 @@
 [![Docker Compose](https://img.shields.io/badge/Orchestration-Docker%20Compose-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-> A production-ready, privacy-preserving IoMT (Internet of Medical Things) clinical decision support platform simulating a decentralized healthcare network. Powered by **Federated Averaging (FedAvg)** over gRPC and **Localized SHAP (SHapley Additive exPlanations)** for zero-data-leakage diagnostics.
+> A privacy-preserving IoMT (Internet of Medical Things) clinical decision support platform simulating a decentralized healthcare network. Powered by **Federated Averaging (FedAvg)** over gRPC and **Localized SHAP (SHapley Additive exPlanations)** for zero-data-leakage diagnostics.
 
 ---
 
