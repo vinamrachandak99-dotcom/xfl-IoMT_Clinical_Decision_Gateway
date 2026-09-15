@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  aggregator:
+    build: ./aggregator
+    ports:
+      - "8080:8080"
+    networks:
+      - xfl-network
+
+  hospital_a:
+    build: ./edge_node
+    ports:
+      - "8001:8000"
+    environment:
+      - NODE_NAME=Hospital_A
+      - FLOWER_SERVER=aggregator:8080
+    depends_on:
+      - aggregator
+    networks:
+      - xfl-network
+
+  hospital_b:
+    build: ./edge_node
+    ports:
+      - "8002:8000"
+    environment:
+      - NODE_NAME=Hospital_B
+      - FLOWER_SERVER=aggregator:8080
+    depends_on:
+      - aggregator
+    networks:
+      - xfl-network
+
+networks:
+  xfl-network:
+    driver: bridge
