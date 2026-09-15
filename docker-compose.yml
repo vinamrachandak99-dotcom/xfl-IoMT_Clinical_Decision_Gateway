@@ -32,6 +32,16 @@ services:
     networks:
       - xfl-network
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - xfl-network
+    depends_on:
+      - hospital_a
+      - hospital_b
+
 networks:
   xfl-network:
     driver: bridge
