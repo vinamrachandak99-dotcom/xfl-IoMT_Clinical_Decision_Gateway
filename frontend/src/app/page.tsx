@@ -156,7 +156,7 @@ export default function ClinicalDashboard() {
                       type="number" 
                       min="1" 
                       max="120"
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       value={formData.Age}
                       onChange={(e) => setFormData({...formData, Age: parseFloat(e.target.value) || 0})}
                     />
@@ -169,7 +169,7 @@ export default function ClinicalDashboard() {
                       type="number"
                       min="50"
                       max="250"
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       value={formData.RestingBP}
                       onChange={(e) => setFormData({...formData, RestingBP: parseFloat(e.target.value) || 0})}
                     />
@@ -186,7 +186,7 @@ export default function ClinicalDashboard() {
                       type="number"
                       min="50"
                       max="600"
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       value={formData.Cholesterol}
                       onChange={(e) => setFormData({...formData, Cholesterol: parseFloat(e.target.value) || 0})}
                     />
@@ -199,7 +199,7 @@ export default function ClinicalDashboard() {
                       type="number"
                       min="40"
                       max="220"
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       value={formData.MaxHR}
                       onChange={(e) => setFormData({...formData, MaxHR: parseFloat(e.target.value) || 0})}
                     />
@@ -216,7 +216,7 @@ export default function ClinicalDashboard() {
                     step="0.1"
                     min="0"
                     max="10"
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     value={formData.ST_Depression}
                     onChange={(e) => setFormData({...formData, ST_Depression: parseFloat(e.target.value) || 0})}
                   />
