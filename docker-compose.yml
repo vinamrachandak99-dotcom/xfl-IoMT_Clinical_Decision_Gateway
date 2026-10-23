@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  aggregator:
+    build: ./aggregator
+    container_name: xfl-aggregator
+    ports:
+      - "8080:8080"
+    networks:
+      - xfl-network
+
+  hospital_a:
+    build: ./edge_node
+    container_name: hospital_client_a
+    ports:
+      - "8001:8000"
+    environment:
+      - NODE_NAME=Hospital_A
+      - FLOWER_SERVER=aggregator:8080
+    depends_on:
+      - aggregator
+    networks:
+      - xfl-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 4G
+    cpus: 1.5
+    mem_limit: 4g
+
+  hospital_b:
+    build: ./edge_node
+    container_name: hospital_client_b
+    ports:
+      - "8002:8000"
+    environment:
+      - NODE_NAME=Hospital_B
+      - FLOWER_SERVER=aggregator:8080
+    depends_on:
+      - aggregator
+    networks:
+      - xfl-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 4G
+    cpus: 1.5
+    mem_limit: 4g
+
+  frontend:
+    build: ./frontend
+    container_name: xfl-clinical-dashboard
+    ports:
+      - "3000:3000"
+    networks:
+      - xfl-network
+    depends_on:
+      - hospital_a
+      - hospital_b
+
+networks:
+  xfl-network:
+    driver: bridge

@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "timestamp": "2026-10-23 15:14:58",
+    "os": "Windows 11 (10.0.26200)",
+    "python_version": "3.13.7",
+    "torch_version": "2.14.1+cpu",
+    "shap_version": "0.52.0",
+    "processor": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "machine": "AMD64"
+  },
+  "classification_performance": {
+    "Linear_FedAvg": {
+      "accuracy": 0.6133,
+      "precision": 0.5714,
+      "recall": 0.9067,
+      "f1_score": 0.701,
+      "roc_auc": 0.7049,
+      "confusion_matrix": [
+        [
+          24,
+          51
+        ],
+        [
+          7,
+          68
+        ]
+      ],
+      "training_time_ms": 236.22
+    },
+    "PyTorch_MLP": {
+      "accuracy": 0.5667,
+      "precision": 0.5439,
+      "recall": 0.8267,
+      "f1_score": 0.6561,
+      "roc_auc": 0.6868,
+      "confusion_matrix": [
+        [
+          23,
+          52
+        ],
+        [
+          13,
+          62
+        ]
+      ],
+      "training_time_ms": 326.5
+    }
+  },
+  "latency_profile_ms": {
+    "linear_inference_cold_ms": 0.96,
+    "linear_inference_warm_ms": 1.25,
+    "mlp_inference_cold_ms": 0.218,
+    "mlp_inference_warm_ms": 0.04,
+    "linear_shap_cold_ms": 0.359,
+    "linear_shap_warm_ms": 0.006,
+    "mlp_shap_cold_ms": 100.277,
+    "mlp_shap_warm_ms": 2.888
+  },
+  "explanation_consistency": {
+    "mean_cosine_similarity": 0.9051,
+    "mean_spearman_rank_correlation": 0.8286,
+    "mean_top3_jaccard_overlap": 0.6133,
+    "evaluated_instances": 30
+  },
+  "communication_and_model_size": {
+    "linear_parameters_payload_bytes": 64,
+    "mlp_num_trainable_parameters": 273,
+    "fl_rounds_configured": 10,
+    "clients_active": 2
+  }
+}
