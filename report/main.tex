@@ -38,6 +38,7 @@
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{cite}
+\usepackage{enumitem}
 \usepackage{microtype}
 
 % --- Hyperlink Setup ---
@@ -65,7 +66,7 @@
 % --- Headings Formatting (RBU Guidelines) ---
 % Chapter: 16pt, Bold, Uppercase
 \titleformat{\chapter}[display]
-  {\normalfont\fontsize{16pt}{20pt}\bfseries\uppercase}
+  {\normalfont\fontsize{16pt}{20pt}\bfseries}
   {\chaptertitlename\ \thechapter}{10pt}{\fontsize{16pt}{20pt}\bfseries}
 \titlespacing*{\chapter}{0pt}{-10pt}{20pt}
 
@@ -80,19 +81,6 @@
   {\normalfont\fontsize{12pt}{16pt}\bfseries}
   {\thesubsection}{1em}{}
 \titlespacing*{\subsection}{0pt}{10pt}{4pt}
-
-% --- Chapter Separator Flyleaf Macro ---
-\newcommand{\chapterseparator}[2]{
-  \clearpage
-  \thispagestyle{empty}
-  \vspace*{\fill}
-  \begin{flushright}
-    {\fontsize{16pt}{20pt}\bfseries\selectfont CHAPTER #1}\\[1.2em]
-    {\fontsize{13pt}{18pt}\itshape\selectfont\color{gray!80!black} #2}
-  \end{flushright}
-  \vspace*{\fill}
-  \clearpage
-}
 
 \begin{document}
 
@@ -117,10 +105,11 @@
 
 {\fontsize{12pt}{16pt}\selectfont Submitted by}\\[0.8em]
 {\fontsize{12pt}{16pt}\bfseries\selectfont
-Vinamra Chandak \quad (Roll No. A9-46)\\[0.3em]
-Devyani Gadde \quad (Roll No. A9-51)\\[0.3em]
-Radha Singh \quad (Roll No. A9-56)\\[1.8em]
-}
+\begin{tabular}{ll}
+Vinamra Chandak & (Roll No. A9-46) \\
+Devyani Gadde   & (Roll No. A9-51) \\
+Radha Singh     & (Roll No. A9-56)
+\end{tabular}}\\[1.8em]
 
 {\fontsize{12pt}{16pt}\selectfont Under the Guidance of}\\[0.4em]
 {\fontsize{13pt}{18pt}\bfseries\selectfont Prof./Dr. Gunjan Keswani}\\[0.2em]
@@ -129,9 +118,9 @@ Radha Singh \quad (Roll No. A9-56)\\[1.8em]
 {\fontsize{12pt}{16pt}\bfseries\selectfont Academic Year: 2026 -- 2027}\par
 \end{titlepage}
 
-% Front Matter Page Numbering: Roman Numerals
-\pagenumbering{roman}
-\setcounter{page}{2}
+% Continuous Page Numbering from Page 1 to End
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 % ==============================================================================
 % 2. CERTIFICATE
@@ -157,14 +146,21 @@ This is to certify that the Project Report on \textbf{``Explainable Federated Le
 \vspace{4.0em}
 
 \noindent
-\begin{tabularx}{\textwidth}{X r}
-\textbf{Gunjan Keswani} & \textbf{Associate Head} \\
-Project Guide & Department of CSE \\
-Department of CSE & Ramdeobaba University \\
-Ramdeobaba University & \\
-\end{tabularx}
+\begin{minipage}[t]{0.48\textwidth}
+\textbf{Gunjan Keswani}\\
+Project Guide\\
+Department of CSE\\
+Ramdeobaba University, Nagpur
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\raggedleft
+\textbf{Associate Head}\\
+Department of CSE\\
+Ramdeobaba University, Nagpur
+\end{minipage}
 
-\vspace{4.5em}
+\vspace{5.0em}
 \begin{center}
 \textbf{Dr. P. D. Adane}\\
 Dean, School of Computer Science and Engineering\\
@@ -209,16 +205,25 @@ This report entitled \textbf{``Explainable Federated Learning for Healthcare IoT
 \vspace{5.0em}
 
 \noindent
-\begin{tabularx}{\textwidth}{X r}
-\textbf{Gunjan Keswani} & \textbf{External Examiner} \\
-Project Guide & (Name and Signature) \\
-Department of Computer Science \& Engineering & \\
-\end{tabularx}
+\begin{minipage}[t]{0.48\textwidth}
+\textbf{Gunjan Keswani}\\
+Project Guide\\
+Department of CSE\\
+Ramdeobaba University, Nagpur
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\raggedleft
+\textbf{External Examiner}\\
+(Name and Signature)\\
+Ramdeobaba University, Nagpur
+\end{minipage}
 
-\vspace{6.0em}
+\vspace{5.0em}
 \begin{center}
 \textbf{Dr. P. D. Adane}\\
-Dean, School of Computer Science and Engineering
+Dean, School of Computer Science and Engineering\\
+Ramdeobaba University, Nagpur
 \end{center}
 
 % ==============================================================================
@@ -254,7 +259,7 @@ We acknowledge the support of our classmates, laboratory technical staff, friend
 \begin{spacing}{1.5}
 Internet of Medical Things (IoMT) devices and point-of-care telemetry systems generate continuous streams of high-dimensional physiological indicators essential for clinical decision support. However, centralizing sensitive patient telemetry into cloud repositories violates privacy regulations, including HIPAA, GDPR, and the Digital Personal Data Protection (DPDP) Act, while introducing communication latency and single points of failure. Conversely, isolated models trained within single hospital silos exhibit poor generalizability across heterogeneous patient cohorts. Furthermore, deep clinical models often operate as opaque black boxes, preventing clinical adoption due to a lack of interpretable feature attribution.
 
-This project proposes, implements, and evaluates the \textbf{XFL-IoMT Clinical Decision Gateway}, a privacy-preserving edge architecture coupling Federated Learning (FL) via Federated Averaging (FedAvg) over gRPC with localized Explainable Artificial Intelligence (XAI) using Shapley Additive exPlanations (SHAP). The system enforces physical data locality: raw patient records and SHAP reference background cohorts are confined within independent edge hospital containers (`hospital\_a.db` and `hospital\_b.db`). The edge microservice supports dynamic dual-model execution between a baseline Logistic Regression model and a non-linear PyTorch Multi-Layer Perceptron (CardiacMLP). On-premise SHAP attribution is computed against local demographic reference cohorts ($N=50$), producing exact directional risk shifts without raw data egress.
+This project proposes, implements, and evaluates the \textbf{XFL-IoMT Clinical Decision Gateway}, a privacy-preserving edge architecture coupling Federated Learning (FL) via Federated Averaging (FedAvg) over gRPC with localized Explainable Artificial Intelligence (XAI) using Shapley Additive exPlanations (SHAP). The system enforces physical data locality: raw patient records and SHAP reference background cohorts are confined within independent edge hospital containers (\texttt{hospital\_a.db} and \texttt{hospital\_b.db}). The edge microservice supports dynamic dual-model execution between a baseline Logistic Regression model and a non-linear PyTorch Multi-Layer Perceptron (CardiacMLP). On-premise SHAP attribution is computed against local demographic reference cohorts ($N=50$), producing exact directional risk shifts without raw data egress.
 
 Empirical evaluation on an independent held-out cardiovascular test set ($N=150$) demonstrates that global FedAvg achieves an accuracy of $61.33\%$, an F1-score of $0.7010$, and an ROC-AUC of $0.7049$, while transmitting strictly 64 bytes of numerical parameter payload per round. Edge inference latency averages $1.25\text{ ms}$ for linear inference and $0.04\text{ ms}$ for the PyTorch MLP. Cross-silo explanation consistency analysis across heterogeneous non-IID client cohorts reveals a mean cosine similarity of $0.9051$, a Spearman rank correlation of $\rho = 0.8286$, and a top-3 feature overlap of $61.3\%$. The prototype features a responsive Next.js clinical dashboard with concurrent cross-silo node benchmarking and Docker resource limits (1.5 CPU quota, 4 GB RAM).
 \end{spacing}
@@ -333,10 +338,7 @@ XFL & Explainable Federated Learning \\
 % ==============================================================================
 % CHAPTER 1: INTRODUCTION
 % ==============================================================================
-\chapterseparator{1}{INTRODUCTION\\Healthcare IoT Context\\Problem Statement\\Objectives \& Scope\\Organization}
 
-\pagenumbering{arabic}
-\setcounter{page}{1}
 
 \chapter{INTRODUCTION}
 
@@ -362,7 +364,7 @@ The primary objective of this project is to architect, implement, and empiricall
 \begin{itemize}
     \item \textbf{Objective 1 (Architectural Data Locality):} Design and containerize a decentralized edge architecture where raw physiological telemetry and SHAP background reference distributions remain strictly behind local hospital firewalls.
     \item \textbf{Objective 2 (Dual-Model Edge Inference):} Implement a dynamic model execution gateway supporting both a baseline linear model (Logistic Regression) and a non-linear deep neural network (PyTorch CardiacMLP) with monotonic runtime telemetry.
-    \item \textbf{Objective 3 (Edge-Native Explainability):} Integrate local `shap.LinearExplainer` and `shap.DeepExplainer` pipelines that compute exact Shapley attributions against localized reference cohorts ($N=50$) without cross-silo data leakage.
+    \item \textbf{Objective 3 (Edge-Native Explainability):} Integrate local \texttt{shap.LinearExplainer} and \texttt{shap.DeepExplainer} pipelines that compute exact Shapley attributions against localized reference cohorts ($N=50$) without cross-silo data leakage.
     \item \textbf{Objective 4 (Cross-Silo Comparison Interface):} Develop a clinical decision dashboard in Next.js 14 providing concurrent dual-node querying (Cardiology vs. General Medicine) and side-by-side SHAP waterfall visualizations.
     \item \textbf{Objective 5 (Empirical Benchmarking):} Quantify model classification metrics (Accuracy, F1-score, ROC-AUC), inference latency, SHAP computation overhead, communication payload sizes, and cross-silo explanation consistency metrics (Cosine Similarity, Spearman Rank Correlation, Top-$k$ Jaccard Overlap).
 \end{itemize}
@@ -381,7 +383,7 @@ The remainder of this report is organized as follows: Chapter 2 reviews foundati
 % ==============================================================================
 % CHAPTER 2: LITERATURE REVIEW
 % ==============================================================================
-\chapterseparator{2}{LITERATURE REVIEW\\Foundational Federated Learning\\Healthcare FL Systems\\Explainable AI \& SHAP\\Non-IID Heterogeneity\\Research Gap Analysis}
+
 
 \chapter{LITERATURE REVIEW AND RESEARCH GAP}
 
@@ -465,7 +467,7 @@ Our implementation addresses this precise gap: retaining strict data locality, e
 % ==============================================================================
 % CHAPTER 3: PROPOSED SYSTEM AND METHODOLOGY
 % ==============================================================================
-\chapterseparator{3}{PROPOSED SYSTEM AND METHODOLOGY\\Four-Layer Gateway Architecture\\Federated Averaging Formulation\\Local SHAP Reference Cohort Model\\Dual-Model Inference Mechanics\\Consistency Evaluation Protocol}
+
 
 \chapter{PROPOSED SYSTEM AND METHODOLOGY}
 
@@ -474,8 +476,8 @@ The XFL-IoMT Clinical Decision Gateway is organized into four decoupled architec
 
 \begin{enumerate}
     \item \textbf{IoMT Sensing and Ingestion Layer:} Ingests streaming physiological indicators from patient telemetry devices. Inputs are validated against strict physiological ranges through Pydantic schemas.
-    \item \textbf{Isolated Edge Node Layer (Hospital Clients):} Independent containerized services representing participating hospital silos (Hospital A: Cardiology; Hospital B: General Medicine). Each node encapsulates an isolated SQLite database (`hospital\_a.db`, `hospital\_b.db`), local training pipelines, and edge-native SHAP engines.
-    \item \textbf{Federated Coordination Layer (Aggregator):} A centralized Flower coordinator executing asynchronous Federated Averaging over gRPC port `8080`. It transmits strictly numerical tensor parameter arrays, with zero access to raw patient records or reference distributions.
+    \item \textbf{Isolated Edge Node Layer (Hospital Clients):} Independent containerized services representing participating hospital silos (Hospital A: Cardiology; Hospital B: General Medicine). Each node encapsulates an isolated SQLite database (\texttt{hospital\_a.db}, \texttt{hospital\_b.db}), local training pipelines, and edge-native SHAP engines.
+    \item \textbf{Federated Coordination Layer (Aggregator):} A centralized Flower coordinator executing asynchronous Federated Averaging over gRPC port \texttt{8080}. It transmits strictly numerical tensor parameter arrays, with zero access to raw patient records or reference distributions.
     \item \textbf{Clinical Decision Dashboard Layer:} A reactive Next.js 14 web application providing clinicians with real-time risk assessment, architecture toggling, and concurrent dual-node cross-silo comparison.
 \end{enumerate}
 
@@ -504,7 +506,7 @@ In our baseline linear model, the client computes parameter updates $\mathbf{w} 
     \mathbf{w}_{t+1} = \frac{n_A}{N} \mathbf{w}_{t+1}^A + \frac{n_B}{N} \mathbf{w}_{t+1}^B, \quad b_{t+1} = \frac{n_A}{N} b_{t+1}^A + \frac{n_B}{N} b_{t+1}^B
     \label{eq:fedavg_concrete}
 \end{equation}
-The aggregated parameters are broadcast back to the clients over gRPC and serialized to disk as `local_model.pkl` for immediate inference availability.
+The aggregated parameters are broadcast back to the clients over gRPC and serialized to disk as \texttt{local\_model.pkl} for immediate inference availability.
 
 \section{Local SHAP Reference Cohort Formulation}
 A central innovation of our architecture is the resolution of the background reference dilemma. In standard SHAP, the attribution $\phi_i(\mathbf{x})$ measures the difference between model output $f(\mathbf{x})$ and the expected value over the reference dataset:
@@ -535,7 +537,7 @@ The linear model evaluates posterior risk probability via the sigmoid function:
 \begin{equation}
     P(Y=1 \mid \mathbf{x}) = \sigma(\mathbf{w}^T \mathbf{x} + b) = \frac{1}{1 + e^{-(\mathbf{w}^T \mathbf{x} + b)}}
 \end{equation}
-For linear models with independent feature distributions, `shap.LinearExplainer` calculates exact analytical attributions in closed form:
+For linear models with independent feature distributions, \texttt{shap.LinearExplainer} calculates exact analytical attributions in closed form:
 \begin{equation}
     \phi_i(\mathbf{x}) = w_i \cdot \left( x_i - E[X_i] \right)
     \label{eq:linear_shap}
@@ -549,7 +551,7 @@ To capture complex non-linear interactions among cardiovascular indicators, we d
     \mathbf{h}_2 &= \text{ReLU}(\mathbf{W}_2 \mathbf{h}_1 + \mathbf{b}_2), \quad \mathbf{W}_2 \in \mathbb{R}^{8 \times 16}, \mathbf{b}_2 \in \mathbb{R}^{8} \\
     z &= \mathbf{W}_3 \mathbf{h}_2 + b_3, \quad \mathbf{W}_3 \in \mathbb{R}^{1 \times 8}, b_3 \in \mathbb{R}
 \end{align}
-where $\mathbf{x}_{\text{scaled}} = \mathbf{S}(\mathbf{x})$ is standardized using client-local feature statistics. The logit output $z$ is explained using `shap.DeepExplainer`, which adapts the DeepLIFT backpropagation rules to approximate Shapley values over non-linear activation functions.
+where $\mathbf{x}_{\text{scaled}} = \mathbf{S}(\mathbf{x})$ is standardized using client-local feature statistics. The logit output $z$ is explained using \texttt{shap.DeepExplainer}, which adapts the DeepLIFT backpropagation rules to approximate Shapley values over non-linear activation functions.
 
 \section{Cross-Silo Explanation Consistency Protocol}
 To evaluate the stability of localized explanations across heterogeneous silos, we formulate three quantitative consistency metrics evaluated on a shared set of $P$ test instances:
@@ -573,7 +575,7 @@ To evaluate the stability of localized explanations across heterogeneous silos, 
 % ==============================================================================
 % CHAPTER 4: SYSTEM DESIGN AND IMPLEMENTATION
 % ==============================================================================
-\chapterseparator{4}{SYSTEM DESIGN AND IMPLEMENTATION\\Repository Structure \& Services\\API Schemas \& Monotonic Timers\\Clinical Dashboard Architecture\\Storage Isolation \& Docker Limits\\Workflow Mechanics}
+
 
 \chapter{SYSTEM DESIGN AND IMPLEMENTATION}
 
@@ -636,25 +638,25 @@ Patient telemetry is validated upon ingestion using Pydantic v2 data models. Tab
 \end{tabularx}
 \end{table}
 
-\section{Edge Microservice Implementation (`client_api.py`)}
+\section{Edge Microservice Implementation (\texttt{client\_api.py})}
 Each edge node exposes an asynchronous FastAPI application decoupled from the background federated training loop:
 
 \begin{itemize}
-    \item \textbf{Non-Blocking Threaded Architecture:} In `client_api.py`, `start_fl_client()` runs inside an isolated background daemon thread (`threading.Thread(target=start_fl_client, daemon=True)`). This prevents the persistent gRPC coordination session from blocking FastAPI's ASGI event loop, guaranteeing sub-second response times for incoming clinician queries.
-    \item \textbf{Dynamic Model Selection:} The `/predict` endpoint accepts a query parameter:
+    \item \textbf{Non-Blocking Threaded Architecture:} In \texttt{client\_api.py}, \texttt{start\_fl\_client()} runs inside an isolated background daemon thread (\texttt{threading.Thread(target=start\_fl\_client, daemon=True)}). This prevents the persistent gRPC coordination session from blocking FastAPI's ASGI event loop, guaranteeing sub-second response times for incoming clinician queries.
+    \item \textbf{Dynamic Model Selection:} The \texttt{/predict} endpoint accepts a query parameter:
     \begin{verbatim}
     POST /predict?model={linear|mlp}
     \end{verbatim}
     Incoming values are sanitized; unknown parameters return a controlled HTTP 400 Bad Request. Missing model artifacts trigger an HTTP 503 Service Unavailable, preventing silent fallback to unverified defaults.
-    \item \textbf{Monotonic Timing Telemetry:} To guarantee precision and eliminate clock drift, execution times are measured using Python's monotonic clock (`time.perf_counter()`), recorded separately for model forward-pass inference (`inference_time_ms`) and on-premise SHAP attribution (`shap_time_ms`).
+    \item \textbf{Monotonic Timing Telemetry:} To guarantee precision and eliminate clock drift, execution times are measured using Python's monotonic clock (\texttt{time.perf\_counter()}), recorded separately for model forward-pass inference (\texttt{inference\_time\_ms}) and on-premise SHAP attribution (\texttt{shap\_time\_ms}).
 \end{itemize}
 
 \section{Database Design and Storage Isolation}
-To guarantee zero cross-node data leakage, each hospital container runs an independent SQLite relational database (`hospital_a.db` and `hospital_b.db`). Table~\ref{tab:db_schema} outlines the relational schema.
+To guarantee zero cross-node data leakage, each hospital container runs an independent SQLite relational database (\texttt{hospital\_a.db} and \texttt{hospital\_b.db}). Table~\ref{tab:db_schema} outlines the relational schema.
 
 \begin{table}[H]
 \centering
-\caption{Edge Node Relational Database Schema (`patient_vitals` table)}
+\caption{Edge Node Relational Database Schema (\texttt{patient\_vitals} table)}
 \label{tab:db_schema}
 \begin{tabularx}{\textwidth}{l l l X}
 \toprule
@@ -675,7 +677,7 @@ To guarantee zero cross-node data leakage, each hospital container runs an indep
 
 No shared Docker volumes or external database ports are exposed. The central aggregator contains zero database connectivity logic.
 
-\section{Clinical Decision Support Dashboard (`page.tsx`)}
+\section{Clinical Decision Support Dashboard (\texttt{page.tsx})}
 The user interface is built using Next.js 14 and Tailwind CSS, providing an institutional, light-mode clinical dashboard:
 
 \begin{figure}[H]
@@ -687,12 +689,12 @@ The user interface is built using Next.js 14 and Tailwind CSS, providing an inst
 
 The dashboard provides two primary operational modes:
 \begin{enumerate}
-    \item \textbf{Single Node Assessment:} Evaluates a single target hospital node (`:8001` or `:8002`) with the selected model architecture (Logistic Regression vs. PyTorch MLP). Renders a diagnostic risk badge and an SVG horizontal waterfall plot via Recharts, where red bars indicate risk-increasing attributions ($\phi_i > 0$) and green bars indicate protective factors ($\phi_i < 0$).
-    \item \textbf{Compare Nodes (Cardiology vs. General Medicine):} Dispatches concurrent HTTP POST requests to Hospital A and Hospital B with identical patient vitals using `Promise.allSettled()`. Each node renders side-by-side diagnostic cards, local baseline expectations $E[f(\mathbf{x})]$, and independent SHAP waterfall plots. Independent per-node error boundaries ensure that if one hospital node times out, the other displays results uninterrupted.
+    \item \textbf{Single Node Assessment:} Evaluates a single target hospital node (\texttt{:8001} or \texttt{:8002}) with the selected model architecture (Logistic Regression vs. PyTorch MLP). Renders a diagnostic risk badge and an SVG horizontal waterfall plot via Recharts, where red bars indicate risk-increasing attributions ($\phi_i > 0$) and green bars indicate protective factors ($\phi_i < 0$).
+    \item \textbf{Compare Nodes (Cardiology vs. General Medicine):} Dispatches concurrent HTTP POST requests to Hospital A and Hospital B with identical patient vitals using \texttt{Promise.allSettled()}. Each node renders side-by-side diagnostic cards, local baseline expectations $E[f(\mathbf{x})]$, and independent SHAP waterfall plots. Independent per-node error boundaries ensure that if one hospital node times out, the other displays results uninterrupted.
 \end{enumerate}
 
 \section{Docker Resource Quotas and Container Constraints}
-To simulate realistic resource constraints characteristic of bedside hospital IoT gateways, `docker-compose.yml` enforces hardware quotas on edge containers:
+To simulate realistic resource constraints characteristic of bedside hospital IoT gateways, \texttt{docker-compose.yml} enforces hardware quotas on edge containers:
 
 \begin{verbatim}
 services:
@@ -708,17 +710,17 @@ services:
     mem_limit: 4g
 \end{verbatim}
 
-The configuration specifies a maximum computation ceiling of $1.5$ CPU cores (150\% total allocation quota, representing multi-threaded execution on modern embedded processors) and $4\text{ GB}$ of RAM. Dual specification under `deploy.resources.limits` and root-level `cpus`/`mem_limit` ensures full enforcement under both Docker Swarm mode and standalone Compose runtimes.
+The configuration specifies a maximum computation ceiling of $1.5$ CPU cores (150\% total allocation quota, representing multi-threaded execution on modern embedded processors) and $4\text{ GB}$ of RAM. Dual specification under \texttt{deploy.resources.limits} and root-level \texttt{cpus}/\texttt{mem\_limit} ensures full enforcement under both Docker Swarm mode and standalone Compose runtimes.
 
 % ==============================================================================
 % CHAPTER 5: RESULTS AND DISCUSSION
 % ==============================================================================
-\chapterseparator{5}{RESULTS AND DISCUSSION\\Empirical Performance Benchmarks\\Latency Profiling\\Cross-Silo Consistency Measurements\\Automated Test Verification\\Discussion \& Limitations}
+
 
 \chapter{RESULTS AND DISCUSSION}
 
 \section{Experimental Setup and Environment}
-All reported empirical evaluations were executed in an isolated, reproducible test harness (`evaluate.py`) on the following hardware and software configuration:
+All reported empirical evaluations were executed in an isolated, reproducible test harness (\texttt{evaluate.py}) on the following hardware and software configuration:
 \begin{itemize}
     \item \textbf{Processor:} Intel Core i7 (Family 6 Model 154 Stepping 4, x86\_64 architecture)
     \item \textbf{Operating System:} Microsoft Windows 11 Enterprise (Build 10.0.26200)
@@ -809,7 +811,7 @@ To evaluate the research hypothesis regarding local reference cohort bias, 30 sh
 As visualized in Figure~\ref{fig:shap_comparison}, both hospital gateways agree that asymptomatic chest pain and ST depression are the primary positive risk drivers. However, because Hospital A's background cohort has a higher baseline incidence of elevated blood pressure, the relative risk shift attributable to resting BP is lower in Hospital A than in Hospital B. This confirms that client-local SHAP successfully contextualizes risk relative to the hospital's specific population baseline.
 
 \section{Automated Functional Test Verification}
-The automated test suite (`tests/test_xfl_gateway.py`) verified all core backend capabilities across 8 test modules using `pytest`. Table~\ref{tab:test_outcomes} summarizes the test outcomes.
+The automated test suite (\texttt{tests/test\_xfl\_gateway.py}) verified all core backend capabilities across 8 test modules using \texttt{pytest}. Table~\ref{tab:test_outcomes} summarizes the test outcomes.
 
 \begin{table}[H]
 \centering
@@ -819,9 +821,9 @@ The automated test suite (`tests/test_xfl_gateway.py`) verified all core backend
 \toprule
 \textbf{Test Module} & \textbf{Status} & \textbf{Verified Capability} \\
 \midrule
-\texttt{test\_health\_endpoint} & PASSED & Validates `/health` schema, record count, and dual-model readiness. \\
+\texttt{test\_health\_endpoint} & PASSED & Validates \texttt{/health} schema, record count, and dual-model readiness. \\
 \texttt{test\_predict\_default\_model} & PASSED & Verifies default routing to linear model with complete telemetry. \\
-\texttt{test\_predict\_mlp\_model} & PASSED & Confirms `?model=mlp` route executes PyTorch model and DeepExplainer. \\
+\texttt{test\_predict\_mlp\_model} & PASSED & Confirms \texttt{?model=mlp} route executes PyTorch model and DeepExplainer. \\
 \texttt{test\_predict\_invalid\_model} & PASSED & Confirms unsupported model values return HTTP 400 Bad Request. \\
 \texttt{test\_predict\_invalid\_ranges} & PASSED & Validates boundary enforcement (e.g., negative age) returns HTTP 422. \\
 \texttt{test\_shap\_additivity} & PASSED & Audits efficiency axiom: $\sum \phi_i + E[f(\mathbf{x})] = f(\mathbf{x})$ within $10^{-5}$ tolerance. \\
@@ -844,7 +846,7 @@ To maintain academic integrity, several limitations of the current prototype mus
 % ==============================================================================
 % CHAPTER 6: CONCLUSION AND FUTURE SCOPE
 % ==============================================================================
-\chapterseparator{6}{CONCLUSION AND FUTURE SCOPE\\Summary of Achieved Objectives\\Core Research Findings\\Clinical Translation Pathway\\Future Development Roadmap}
+
 
 \chapter{CONCLUSION AND FUTURE SCOPE}
 
@@ -852,9 +854,9 @@ To maintain academic integrity, several limitations of the current prototype mus
 This project successfully designed, implemented, and empirically evaluated the \textbf{XFL-IoMT Clinical Decision Gateway}, demonstrating that privacy-preserving federated learning can be combined with edge-native explainability without compromising data locality. All primary objectives formulated in Chapter 1 were achieved:
 
 \begin{itemize}
-    \item \textbf{Strict Data Locality:} Implemented decoupled edge nodes running isolated SQLite databases (`hospital\_a.db` and `hospital\_b.db`). Raw patient telemetry and background reference cohorts never leave the edge firewall.
-    \item \textbf{Collaborative Federated Convergence:} Deployed Flower FedAvg over gRPC port `8080`, achieving global linear model convergence while transmitting strictly 64 bytes of numerical weights per round.
-    \item \textbf{Dual-Model Architecture:} Implemented a dynamic API supporting both Logistic Regression and a PyTorch CardiacMLP, coupled with `shap.LinearExplainer` and `shap.DeepExplainer`.
+    \item \textbf{Strict Data Locality:} Implemented decoupled edge nodes running isolated SQLite databases (\texttt{hospital\_a.db} and \texttt{hospital\_b.db}). Raw patient telemetry and background reference cohorts never leave the edge firewall.
+    \item \textbf{Collaborative Federated Convergence:} Deployed Flower FedAvg over gRPC port \texttt{8080}, achieving global linear model convergence while transmitting strictly 64 bytes of numerical weights per round.
+    \item \textbf{Dual-Model Architecture:} Implemented a dynamic API supporting both Logistic Regression and a PyTorch CardiacMLP, coupled with \texttt{shap.LinearExplainer} and \texttt{shap.DeepExplainer}.
     \item \textbf{Interactive Clinical Comparison:} Developed a Next.js 14 dashboard providing concurrent cross-silo comparison across Cardiology and General Medicine nodes, rendering side-by-side SHAP waterfall plots and real execution timers.
     \item \textbf{Empirical Validation:} Verified performance on an independent held-out test cohort ($61.33\%$ accuracy, $0.7010$ F1-score, $0.7049$ ROC-AUC, $1.25\text{ ms}$ warm inference latency), and measured cross-silo explanation consistency ($\text{CosSim} = 0.9051$, Spearman $\rho = 0.8286$, top-3 overlap $61.3\%$).
 \end{itemize}
@@ -873,7 +875,7 @@ Building upon this verified prototype, future engineering and research milestone
     \item \textbf{Advanced Cryptographic Privacy:} Integrating Local Differential Privacy (DP-SGD) with calibrated Gaussian noise injection ($\epsilon, \delta$) and Secure Aggregation (SecAgg) to defend against gradient reconstruction and model inversion attacks.
     \item \textbf{Algorithmic Non-IID Mitigations:} Benchmarking FedAvg against FedProx and SCAFFOLD across varying Dirichlet concentration parameters ($\alpha \in [0.1, 10.0]$) to constrain client drift.
     \item \textbf{Physical IoMT Hardware Deployment:} Deploying edge node containers onto physical low-power hardware, such as Raspberry Pi 5 and NVIDIA Jetson Orin Nano, measuring empirical battery consumption and hardware thermal profiles under continuous telemetry ingestion.
-    \item \textbf{Clinical Interoperability Standards:} Developing ingestion adapters compatible with HL7 FHIR (Fast Healthcare Interoperability Resources) `Observation` schemas for integration with hospital Electronic Health Record (EHR) infrastructures.
+    \item \textbf{Clinical Interoperability Standards:} Developing ingestion adapters compatible with HL7 FHIR (Fast Healthcare Interoperability Resources) \texttt{Observation} schemas for integration with hospital Electronic Health Record (EHR) infrastructures.
 \end{enumerate}
 
 % ==============================================================================
@@ -885,7 +887,7 @@ Building upon this verified prototype, future engineering and research milestone
 \end{center}
 
 \begin{spacing}{1.15}
-\begin{enumerate}[label={[\arabic*]},leftmargin=2.5em]
+\begin{thebibliography}{99}
     \bibitem{mcmahan2017communication} B. McMahan, E. Moore, D. Ramage, S. Hampson, and B. A. y Arcas, ``Communication-efficient learning of deep networks from decentralized data,'' in \textit{Proc. 20th Int. Conf. Artif. Intell. Statist. (AISTATS)}, vol. 54, 2017, pp. 1273--1282.
     \bibitem{lundberg2017unified} S. M. Lundberg and S.-I. Lee, ``A unified approach to interpreting model predictions,'' in \textit{Advances in Neural Information Processing Systems (NeurIPS 30)}, 2017, pp. 4765--4774.
     \bibitem{teo2024federated} Z. L. Teo, K. C. Ong, X. Ning, et al., ``Federated machine learning in healthcare: A systematic review on clinical applications and technical architecture,'' \textit{NPJ Digital Medicine}, vol. 7, no. 1, p. 19, 2024.
@@ -910,7 +912,7 @@ Building upon this verified prototype, future engineering and research milestone
     \bibitem{kaissis2020secure} G. A. Kaissis, M. R. Makowski, D. Rückert, and R. F. Braren, ``Secure, privacy-preserving and federated machine learning in medical imaging,'' \textit{Nature Machine Intelligence}, vol. 2, no. 6, pp. 305--311, 2020.
     \bibitem{xu2021federated} J. Xu, B. S. Glicksberg, C. Su, P. Walker, J. Bian, and F. Wang, ``Federated learning for healthcare informatics,'' \textit{Journal of Healthcare Informatics Research}, vol. 5, no. 1, pp. 1--19, 2021.
     \bibitem{ghassemi2021false} M. Ghassemi, L. Oakden-Rayner, and A. L. Beam, ``The false hope of current approaches to explainable artificial intelligence in healthcare,'' \textit{The Lancet Digital Health}, vol. 3, no. 11, pp. e745--e750, 2021.
-\end{enumerate}
+\end{thebibliography}
 \end{spacing}
 
 % ==============================================================================
@@ -960,11 +962,11 @@ In accordance with Ramdeobaba University guidelines for group projects, Table~\r
 \toprule
 \textbf{Student Name} & \textbf{Roll Number} & \textbf{Specific Technical Contribution} \\
 \midrule
-\textbf{Vinamra Chandak} & A9-46 & Architectural system design, Flower Federated Averaging coordinator implementation (`server.py`), gRPC communication configuration, Docker Compose resource quota specification, and multi-container orchestration. \\
+\textbf{Vinamra Chandak} & A9-46 & Architectural system design, Flower Federated Averaging coordinator implementation (\texttt{server.py}), gRPC communication configuration, Docker Compose resource quota specification, and multi-container orchestration. \\
 \midrule
-\textbf{Devyani Gadde} & A9-51 & Edge microservice development (`client_api.py`), local SQLite database integration (`db_setup.py`), PyTorch CardiacMLP neural network design, and local `shap.LinearExplainer` and `shap.DeepExplainer` engine integration. \\
+\textbf{Devyani Gadde} & A9-51 & Edge microservice development (\texttt{client\_api.py}), local SQLite database integration (\texttt{db\_setup.py}), PyTorch CardiacMLP neural network design, and local \texttt{shap.LinearExplainer} and \texttt{shap.DeepExplainer} engine integration. \\
 \midrule
-\textbf{Radha Singh} & A9-56 & Next.js 14 clinical dashboard engineering (`page.tsx`), cross-silo comparison interface, automated pytest suite development (`test_xfl_gateway.py`), empirical benchmark evaluation (`evaluate.py`), and documentation synthesis. \\
+\textbf{Radha Singh} & A9-56 & Next.js 14 clinical dashboard engineering (\texttt{page.tsx}), cross-silo comparison interface, automated pytest suite development (\texttt{test\_xfl\_gateway.py}), empirical benchmark evaluation (\texttt{evaluate.py}), and documentation synthesis. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -990,18 +992,18 @@ The tangible engineering and research outputs generated by this project include:
 \begin{enumerate}
     \item \textbf{Working Multi-Container Prototype:} A fully functional decentralized edge gateway comprising:
     \begin{itemize}
-        \item Flower FedAvg Server on gRPC port `8080`
-        \item Hospital A Edge Node on FastAPI port `8001`
-        \item Hospital B Edge Node on FastAPI port `8002`
-        \item Clinical Decision Dashboard on Next.js port `3000`
+        \item Flower FedAvg Server on gRPC port \texttt{8080}
+        \item Hospital A Edge Node on FastAPI port \texttt{8001}
+        \item Hospital B Edge Node on FastAPI port \texttt{8002}
+        \item Clinical Decision Dashboard on Next.js port \texttt{3000}
     \end{itemize}
     \item \textbf{Software Repository:} Publicly accessible, version-controlled GitHub repository containing all source code, Dockerfiles, and configuration:
     \begin{center}
         \url{https://github.com/vinamrachandak99-dotcom/xfl-IoMT_Clinical_Decision_Gateway}
     \end{center}
-    \item \textbf{One-Click Deployment Automation:} Production startup and teardown scripts (`start_all.bat` and `stop_all.bat`) enabling immediate demonstration across local edge environments.
-    \item \textbf{Automated Test Suite:} Pytest verification framework (`tests/test_xfl_gateway.py`) auditing 8 functional, boundary, and mathematical capabilities with a 100\% pass rate.
-    \item \textbf{Empirical Research Evidence Archive:} Complete evaluation artifacts located in `evidence/`, including quantitative metrics (`evaluation_results.json`), comparative models table (`model_comparison.csv`), high-resolution ROC curves (`roc_curves.png`), and cross-silo explanation plots (`shap_waterfall_comparison.png`).
+    \item \textbf{One-Click Deployment Automation:} Production startup and teardown scripts (\texttt{start\_all.bat} and \texttt{stop\_all.bat}) enabling immediate demonstration across local edge environments.
+    \item \textbf{Automated Test Suite:} Pytest verification framework (\texttt{tests/test\_xfl\_gateway.py}) auditing 8 functional, boundary, and mathematical capabilities with a 100\% pass rate.
+    \item \textbf{Empirical Research Evidence Archive:} Complete evaluation artifacts located in \texttt{evidence/}, including quantitative metrics (\texttt{evaluation\_results.json}), comparative models table (\texttt{model\_comparison.csv}), high-resolution ROC curves (\texttt{roc\_curves.png}), and cross-silo explanation plots (\texttt{shap\_waterfall\_comparison.png}).
 \end{enumerate}
 
 \end{document}
